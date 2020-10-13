@@ -1,0 +1,15 @@
+{{ partial "header.html" . }}
+
+{{if not .IsHome }}
+<h1>{{ .Title | markdownify }}</h1>
+{{ end }}
+
+<ul>
+    {{ range .Data.Pages }}
+    <li>
+        <a href="{{.RelPermalink}}">{{ .Title }}</a> <i class="fas fa-heart"></i>
+    </li>
+    {{ end }}
+</ul>
+
+{{ partial "footer.html" . }}
