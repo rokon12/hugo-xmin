@@ -17,12 +17,14 @@
     {{ partial "categories.html" .}}
 </p>
 
+{{ partial "share_buttons.html" . }}
+
 <div id="disqus_thread"></div>
 <script>
     var disqus_config = function () {
-        this.page.identifier = '{{with .GetParam "disqus_identifier" }}{{ . }}{{ else }}{{ .Permalink }}{{end}}';
-        this.page.title = '{{with .GetParam "disqus_title" }}{{ . }}{{ else }}{{ .Title }}{{end}}';
-        this.page.url = '{{with .GetParam "disqus_url" }}{{ . | html  }}{{ else }}{{ .Permalink }}{{end}}';
+        this.page.identifier = '{{with .Param "disqus_identifier" }}{{ . }}{{ else }}{{ .Permalink }}{{end}}';
+        this.page.title = '{{with .Param "disqus_title" }}{{ . }}{{ else }}{{ .Title }}{{end}}';
+        this.page.url = '{{with .Param "disqus_url" }}{{ . | html  }}{{ else }}{{ .Permalink }}{{end}}';
     };
 
     (function () { // DON'T EDIT BELOW THIS LINE
