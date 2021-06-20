@@ -1,0 +1,17 @@
+{{ partial "header.html" . }}
+
+{{if not .IsHome }}
+<h1>{{ .Title | markdownify }}</h1>
+{{ end }}
+
+<h2>
+  <span class="list-heading-type">{{ .Section }}:</span>
+  <span class="list-heading-tag">{{ .Title }}</span>
+</h2>
+
+<div id="content">
+  {{ range.Pages }}
+  {{ .Render "li" }}
+  {{ end }}
+</div>
+{{ partial "footer.html" . }}

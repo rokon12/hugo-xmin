@@ -1,3 +1,21 @@
+{{ $.Scratch.Set "isPost" false }}
+{{ if .IsPage }}
+{{ if eq .Type "post" }}
+{{ $.Scratch.Set "isPost" true }}
+{{ end }}
+{{ end }}
+<!-- Fix hugo 0.17 expects ".Site.Author.gravatarEmail" whereas hugo 0.18 expects ".Site.Author.gravataremail" -->
+{{ if .Site.Author.gravatarEmail }}
+{{ .Scratch.Set "gravatarEmail" .Site.Author.gravatarEmail }}
+{{ end }}
+{{ if .Site.Author.gravataremail }}
+{{ .Scratch.Set "gravatarEmail" .Site.Author.gravataremail }}
+{{ end }}
+{{ if .Scratch.Get "gravatarEmail" }}
+{{ .Scratch.Set "authorPicture" (printf "//www.gravatar.com/avatar/%s" (urlize (md5 (.Scratch.Get "gravatarEmail")))) }}
+{{ else if .Site.Author.picture }}
+{{ .Scratch.Set "authorPicture" (absURL .Site.Author.picture) }}
+{{ end }}
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
   <head>
@@ -55,6 +73,9 @@
     <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}" />
     <link rel="stylesheet" href="{{ "/css/fonts.css" | relURL }}" />
     <link rel="stylesheet" href="{{ "/css/prism.css" | relURL }}" />
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
     <link rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/default.min.css">

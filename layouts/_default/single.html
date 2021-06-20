@@ -1,12 +1,25 @@
 {{ partial "header.html" . }}
+{{ $baseurl := .Site.BaseURL | sanitizeurl }}
+{{ $author := .Site.Params.Author }}
+{{ if .Params.Author }}
+{{ $author = .Params.Author }}
+{{ end }}
+
+<!--{{ partial "header.html" . }}-->
 <div class="article-meta">
     <h1><span class="title">{{ .Title | markdownify }}</span></h1>
-    {{ with .Params.author }}<h2 class="author">{{ . }}</h2>{{ end }}
-    {{ if (gt .Params.date 0) }}<h2 class="date">{{ .Date.Format "2006/01/02" }}</h2>{{ end }}
+    {{ if .Params.Date }}
+    <p class="post-date">Posted on
+        <time class="dt-published" datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" | safeHTML }}">
+        {{ .PublishDate.Format "2 January, 2006 at 15:04 MST" }}
+        </time> {{ if $author }} by <a href="/about-me/" class="p-author h-card"
+                                       rel="author">{{ $author }}</a>{{ end }}
+    </p>
+    {{ end }}
 </div>
 
 <p class="post-tag">
-    {{ partial "tags.html" .}}
+    {{ partial "categories.html" .}}
 </p>
 
 <main>
@@ -14,12 +27,46 @@
 </main>
 
 <p class="post-tag">
-    {{ partial "categories.html" .}}
+    {{ partial "tags.html" .}}
 </p>
 
 {{ partial "share_buttons.html" . }}
 
+{{ if or (.NextPage) (.PrevPage) }}
+<nav id="article-skip">
+    <div class="next">
+        {{ if and (.NextPage) (not .Params.Menu) }}
+        <a alt="Newer article" href="{{ .NextPage.Permalink }}">&larr; Newer</a>
+        {{ else }}
+        <p>&nbsp;</p>
+        {{ end }}
+    </div>
+    <div class="top">
+        <a alt="Top of page" href="#">Top</a>
+    </div>
+    <div class="prev">
+        {{ if and (.PrevPage) (not .Params.Menu) }}
+        <a alt="Older article" href="{{ .PrevPage.Permalink }}">Older &rarr;</a>
+        {{ else }}
+        <p>&nbsp;</p>
+        {{ end }}
+    </div>
+</nav>
+{{ end }}
+
+{{ with .Params.author }} <h2 class="author">Author: {{ . }}</h2>{{ end }}
+{{ with ($.Scratch.Get "authorPicture") }}
+<img class="header-picture"
+     src="{{ . }}{{ if in . "//www.gravatar.com/avatar/" }}?s=90{{ end }}" alt="{{ i18n "global.author_picture" }}" />
+{{ end }}
+{{ with .Site.Author.bio}} <p> {{. }}</p> {{end}}
+
+<p class="nav">
+    {{ partial "social.html" . }}
+</p>
+
 <div id="disqus_thread"></div>
+
 <script>
     var disqus_config = function () {
         this.page.identifier = '{{with .Param "disqus_identifier" }}{{ . }}{{ else }}{{ .Permalink }}{{end}}';
@@ -37,4 +84,5 @@
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
     Disqus.</a></noscript>
 
+{{ partial "tagcloud.html" . }}
 {{ partial "footer.html" . }}
