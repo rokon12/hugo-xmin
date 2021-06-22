@@ -1,8 +1,8 @@
 <div>
     {{- if .Params.categories -}}
-    Categories:
+    Categories: &nbsp;&nbsp;
     {{- range $index, $tag := .Params.categories -}}{{- if gt $index 0 }} &nbsp; {{ end -}}
-    <a class="post-tag" href="{{ "categories/" | relLangURL }}{{ . | urlize | lower }}" rel="tag"> {{ . }} </a>
+    <a class="post-tag tag-small" href="{{ "categories/" | relLangURL }}{{ . | urlize | lower }}" rel="tag"> {{ . }} </a>
     {{- end -}}
     {{- end -}}
 </div>

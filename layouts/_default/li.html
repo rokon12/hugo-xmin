@@ -1,18 +1,23 @@
-    <article>
-      <header>
+{{ $author := .Site.Params.Author }}
+{{ if .Params.Author }}
+{{ $author = .Params.Author }}
+{{ end }}
+
+<article class="post">
+    <div class="post-title">
         {{ if .Title }}
         <h2 class="list-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
         {{ end }}
-        <p class="list-post-date">
-          <time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" | safeHTML }}">
-            {{ .PublishDate.Format "2 January, 2006 at 15:04 MST" }}
-          </time>
-        </p>
-      </header>
-      <div>
-        {{ .Summary | plainify | safeHTML }}
-      </div>
-      {{ if .Truncated }}
-      <p><a class="read-more" href="{{ .Permalink }}">Read more &rarr;</a></p>
-      {{ end }}
-    </article>
+        <span class="list-post-date post-info">
+            {{ if $author }} by <a href="/about-me/" class="p-author h-card"
+                                   rel="author">{{ $author }}</a>{{ end }}
+            <time datetime="{{ .Date.Format " 2006-01-02" | safeHTML }}">
+             on {{ .PublishDate.Format "2 January, 2006 at 15:04 MST" }}
+            </time>
+
+        </span>
+        <span>
+            {{ partial "tags.html" .}}
+        </span>
+    </div>
+</article>

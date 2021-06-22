@@ -3,16 +3,20 @@
 <h1>{{ .Title | markdownify }}</h1>
 {{ end }}
 
-{{ .Content }}
+<div class="container">
+    <div id="posts" class="page">
+        {{ .Content }}
 
-<h2>{{ .Title }}</h2>
-<div id="content">
-  {{ range $index, $page := (.Paginate (where .Site.RegularPages "Type" "in" site.Params.mainSections)).Pages }}
-  {{ if ne $index 0 }}
-  {{ end }}
-  {{ .Render "li" }}
-  {{ end }}
+        <h2>{{ .Title }}</h2>
+        <div id="content">
+            {{ range $index, $page := (.Paginate (where .Site.RegularPages "Type" "in" site.Params.mainSections)).Pages
+            }}
+            {{ if ne $index 0 }}
+            {{ end }}
+            {{ .Render "li" }}
+            {{ end }}
+        </div>
+    </div>
+
 </div>
-
-
 {{ partial "footer.html" . }}

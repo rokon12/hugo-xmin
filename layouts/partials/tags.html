@@ -1,8 +1,7 @@
 <div id="tags">
     {{- if .Params.tags -}}
-    Tags:
     {{- range $index, $tag := .Params.tags -}}{{- if gt $index 0 }} &nbsp; {{ end -}}
-    <a class="post-tag" href="{{ "tags/" | relLangURL }}{{ . | urlize | lower }}" rel="tag"> {{ . }} </a>
+    <a class="post-tag tag-small" href="{{ "tags/" | relLangURL }}{{ . | urlize | lower }}" rel="tag"> {{ . }} </a>
     {{- end -}}
     {{- end -}}
 </div>

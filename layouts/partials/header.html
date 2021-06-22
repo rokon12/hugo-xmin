@@ -19,7 +19,8 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
   <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="{{if .IsHome}}{{ $.Site.Params.description }}{{else}}{{.Description}}{{end}}" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta property="fb:pages" content="556530934551556" />
@@ -71,6 +72,7 @@
     <script src="/js/prism.js"></script>
 
     <link rel="stylesheet" href="{{ "/css/style.css" | relURL }}" />
+    <link rel="stylesheet" href="{{ "/css/icofont.min.css" | relURL }}" />
     <link rel="stylesheet" href="{{ "/css/fonts.css" | relURL }}" />
     <link rel="stylesheet" href="{{ "/css/prism.css" | relURL }}" />
 
@@ -94,11 +96,23 @@
 
   <body class="line-numbers">
 
-  <nav>
-    <ul class="menu">
-      {{ range .Site.Menus.main }}
-      <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
-      {{ end }}
-    </ul>
-    <hr/>
-    </nav>
+  <div id="head">
+    <div class="container">
+      <header class="masthead clearfix">
+        <a href="/"></a>
+        <div class="site-info">
+          <h1 class="site-name"> <a href="/"> {{ .Site.Title }}</a></h1>
+          <p class="site-description">{{ .Site.Params.description}}</p>
+        </div>
+      </header>
+    </div>
+  </div>
+  <div id="header-menu" class="">
+    <div class="menu">
+      <ul style="margin: 0">
+        {{ range .Site.Menus.main }}
+        <li> <a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
